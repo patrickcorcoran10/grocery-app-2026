@@ -1,43 +1,26 @@
 "use client"
-import {useEffect, useState} from 'react'
+import { useEffect, useState } from "react"
+import TodoItem from "./TodoItem"
 
-interface Todo {
+export interface Todo {
     _id: string
     title: string
     completed: boolean
 }
 
-export default function TodoList() {
-    const [todos, setTodos] = useState<Todo[]>([])
-    const [loading, setLoading] = useState(true)
+interface TodoListProps {
+    todos: Todo[]
+    onToggle: (todo: Todo) => void
+}
 
-    useEffect(() => {
-        async function fetchTodos() {
-            try {
-                const response = await fetch('/api/todos')
-                const data = await response.json()
-                setTodos(data)
-            } catch(error) {
-                console.error("error fetching todos", error)
-            } finally {
-                setLoading(false)
-            }
-        }
-        fetchTodos()
-    }, []);
+export default function TodoList({ todos, onToggle }: TodoListProps) {
+    if (!todos.length) return <p>No List yet</p>
 
     return (
-        <div>
-            <h2>Grocery List</h2>
-            {loading ? <p>Loading...</p> : 
-                todos.length > 0 ? (
-                    <ul>
-                        {todos.map((todo) => (
-                            <li key={todo._id}>{todo.title}</li>
-                        ))}
-                    </ul>
-                ) : <p>No List yet</p>
-            }
-        </div>
+        <ul>
+            {todos.map((todo) => (
+                <TodoItem key={todo._id} item={todo} onToggle={onToggle} />
+            ))}
+        </ul>
     )
 }

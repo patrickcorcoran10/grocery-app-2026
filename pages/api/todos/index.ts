@@ -60,13 +60,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             break;
         case "PUT":
             try {
-                const {id, title, completed} = req.body;
-                if (!id) return res.status(400).json({message: "Todo Id is required"})
+                const {_id, title, completed} = req.body;
+                if (!_id) return res.status(400).json({message: "Todo Id is required"})
                 if (!title || !title.trim()) return res.status(400).json({message: "title is required"})
                 
                 const updatedTodo = await Todo.findByIdAndUpdate(
-                    id, 
-                    {title},
+                    _id, 
+                    {title, completed},
                     {new:true}
                 );
                 if (!updatedTodo) return res.status(404).json({ message: "Todo not found" });
@@ -78,10 +78,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             break;
         case "DELETE":
              try {
-                const { id } = req.body;
-                if (!id) return res.status(400).json({ message: "Todo ID is required" });
+                const { _id } = req.body;
+                if (!_id) return res.status(400).json({ message: "Todo ID is required" });
 
-                const deletedTodo = await Todo.findByIdAndDelete(id);
+                const deletedTodo = await Todo.findByIdAndDelete(_id);
                 if (!deletedTodo) return res.status(404).json({ message: "Todo not found" });
 
                 res.status(200).json({ message: "Todo deleted successfully" });
