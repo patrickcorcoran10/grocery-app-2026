@@ -79,8 +79,10 @@ export default function TodosPage() {
         <div>
             <TodoForm onAdd={addTodo} />
             {loading ? <p>Loading...</p> : <TodoList todos={todos} onToggle={toggleTodo} />}
-            <button className="btn" onClick={deleteCompletedTodos}>Delete Completed Items</button>
-            <button className="btn" onClick={deleteAllTodos}>Delete All Items</button>
+            <div className='flex flex-col'>
+            <button className="btn delete" onClick={deleteCompletedTodos}>Delete Completed Items</button>
+            <button className="btn delete" onClick={deleteAllTodos}>Delete All Items</button>
+            </div>
         </div>
     )
 }
