@@ -62,6 +62,7 @@ export default function TodosPage() {
         <div>
             <TodoForm onAdd={addTodo} />
             {loading ? <p>Loading...</p> : <TodoList todos={todos} onToggle={toggleTodo} />}
+            <button className="btn">Delete all items</button>
         </div>
     )
 }

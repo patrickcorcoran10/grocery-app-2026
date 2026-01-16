@@ -17,7 +17,7 @@ const TodoItem: React.FC<TodoItemProps> = ({item, onToggle}) => {
             <span style={{ textDecoration: item.completed ? 'line-through' : 'none' }}>
                 {item.title}
             </span>
-            <button onClick={() => onToggle(item)}>{item.completed ? "✅" : "❌"}</button>
+            <button className="btn-toggle" onClick={() => onToggle(item)}>{item.completed ? "✅" : "❌"}</button>
         </li>
     )
 }

@@ -22,8 +22,9 @@ export default function TodoForm({ onAdd }: TodoFormProps) {
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
                 placeholder="Add a new todo"
+                className="input"
             />
-            <button type="submit">Add</button>
+            <button type="submit" className="btn">Add</button>
         </form>
     )
 }
