@@ -30,6 +30,20 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 res.status(500).json({ message: "Error creating todo" });
             }
             break;
+        case "DELETE":
+            try {
+                const {mode} = req.query
+                if (mode === "all") {
+                    await Todo.deleteMany({})
+                    return res.status(200).json({message:"all todos deleted"})
+                }
+                if (mode === "completed") {
+                    await Todo.deleteMany({completed:true})
+                    return res.status(200).json({message: "completed todos deleted"})
+                }
+            } catch (error) {
+                
+            }
        
         // UNSUPPORTED METHOD
         default:

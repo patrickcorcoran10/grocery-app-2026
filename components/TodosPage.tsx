@@ -57,12 +57,30 @@ export default function TodosPage() {
             console.error(error)
         }
     }
+    const deleteAllTodos = async () => {
+        try {
+            await fetch('/api/todos?mode=all', {method: "DELETE"})
+            setTodos([])
+        } catch (error) {
+            console.error(error)
+        }
+    }
+
+    const deleteCompletedTodos = async () => {
+        try {
+            await fetch('/api/todos?mode=completed', {method: "DELETE"})
+            setTodos(prev => prev.filter(todo => !todo.completed))
+        } catch (error) {
+            console.error(error)
+        }
+    }
 
     return (
         <div>
             <TodoForm onAdd={addTodo} />
             {loading ? <p>Loading...</p> : <TodoList todos={todos} onToggle={toggleTodo} />}
-            <button className="btn">Delete all items</button>
+            <button className="btn" onClick={deleteCompletedTodos}>Delete Completed Items</button>
+            <button className="btn" onClick={deleteAllTodos}>Delete All Items</button>
         </div>
     )
 }
