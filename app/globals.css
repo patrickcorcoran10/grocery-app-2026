@@ -46,3 +46,9 @@ li {
 .delete {
   margin: 10px 0;
 }
+
+
+main {
+  overflow:overlay;
+  height:fit-content;
+}
