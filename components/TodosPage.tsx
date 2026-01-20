@@ -12,6 +12,7 @@ export default function TodosPage() {
             try {
                 const res = await fetch("/api/todos")
                 const data = await res.json()
+                sortList(data)
                 setTodos(data)
             } catch (error) {
                 console.error("Error fetching todos", error)
@@ -21,7 +22,22 @@ export default function TodosPage() {
         }
         fetchTodos()
     }, [])
-
+    const sortList = (data:[]) => {
+        // Sort Alphabetically
+        data.sort((a:any, b:any) => {
+            return a.title.localeCompare(b.title)
+        })
+        // Sort by Completed or Not.
+        data.sort((a:any, b:any) => {
+            if(a.completed && !b.completed) {
+                return 1;
+            }
+            if (!a.completed && b.completed) {
+                return -1;
+            }
+            return 0;
+        })
+    }
     const toggleTodo = async (todo: Todo) => {
         const updatedTodo = { ...todo, completed: !todo.completed }
         setTodos((prev) =>
@@ -34,6 +50,7 @@ export default function TodosPage() {
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(updatedTodo),
             })
+            window.location.reload()
             if (!res.ok) throw new Error("Failed to update todo")
         } catch (error) {
             console.error(error)
